@@ -1,0 +1,2 @@
+# lpw
+mysqlself repository
