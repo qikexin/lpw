@@ -12,8 +12,8 @@ def zhuce ():
     tag = True
     txt = {}
     name = []
-    fp = open("D:\\test\\test\\message.txt",mode="a+",encoding="utf8")
-    fr = open("D:\\test\\test\\message.txt",mode="r",encoding="utf8")
+    fp = open("message.txt",mode="a+",encoding="utf8")
+    fr = open("message.txt",mode="r",encoding="utf8")
     while tag:
         u_name = input("input your name: ")
  #19-26 注册时输入用户名后判断此用户是否已经注册
@@ -38,26 +38,34 @@ def zhuce ():
                 if select == "y":
                     state = 1
                     return state
-                   # continue
+                    tag= False
+                    break
                 else:
-                    tag = False
-                    continue
+                    print("注册成功，退出！")
+                    sys.exit(8)
+                    # state = 0
+                    # tag = False
+                    # break
             elif save == "n":
                 tag = False
-                continue
+                state =2
+                return state
+                break
             else:
                 print("input error,please run it again")
                 tag =False
         fp.close()
 
+
+
 def denglu():
     tag = True
-    fpr = open("D:\\test\\test\\message.txt",mode="r",encoding="utf8")
+    fpr = open("message.txt",mode="r",encoding="utf8")
     name = []
     password = []
     u_name = input("input your name : ")
 #57-63用户登录时输入用户名后先判断用户名是否已锁定
-    fp_lock = open("D:\\test\\test\\lock.txt",mode="r",encoding="utf8")
+    fp_lock = open("lock.txt",mode="r",encoding="utf8")
     line = fp_lock.readline()
     a=line.split(",")
     if u_name in a:
@@ -75,29 +83,34 @@ def denglu():
         #print(password[name.index("aaa")])
         #判断用户名是否存在
         while tag:
+            #aaaaaaaaa=""
             if u_name in name:
                 p_word = input("input your password : ")
                 for i in range(3):
                     if password[name.index(u_name)] == p_word:
-                        print("login!! is ",u_name,p_word) #提示登录成功
+                        print("登录成功!! is ",u_name,p_word) #提示登录成功
                         tag = False
+                        #aaaaaaaaa=u_name
+                        return u_name
                         break
                     else:
                         if i == 2:
-                            print("lock")   #85-90 用户输错3次密码后将锁定用户名
-                            fp_lock = open("D:\\test\\test\\lock.txt",mode="a",encoding="utf8")
+                            print("账号被锁定")   #85-90 用户输错3次密码后将锁定用户名
+                            fp_lock = open("lock.txt",mode="a",encoding="utf8")
                             fp_lock.writelines(u_name + ",")
                             fp_lock.close()
                             tag = False
+                            return(u_name)
                             break
                         else:
                             p_word=input("reinput password : ")
                             continue
             else:
                 tag = False
-                print("not exist")
+                print("账号不存在")
                 continue
         fpr.close()
+        #return  u_name
 
 num = input("input a number : ")
 if num.isdigit():
@@ -106,13 +119,16 @@ if num.isdigit():
         print("1、注册")
         state = zhuce()
         if state == 1:
-            print("please login！")
-            denglu()
+            print("请登录！")
+            aaaaaaaaa=denglu()
+            print(aaaaaaaaa)
         else:
-            print("not allowed zhuce again!")
+            print("注册失败")
     elif num == 2:
         print("2、登录")
-        denglu()
+        aaaaaaaaa=denglu()
+        #print(aaaaaaaaa)
     else:
         print("input an error number,please reinput")
         sys.exit(8)
+
